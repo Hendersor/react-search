@@ -8,7 +8,7 @@ html {
   font-size: 62.5%;
 }
 
-.App {
+.app {
   background-color: #f3fafb;
   width: 100%;
   height: 100vh;
@@ -43,8 +43,9 @@ html {
   }
 
   .itemsContainer {
+    padding: 15px;
     border-radius: 10px;
-    height: 400px;
+    height: 420px;
     width: 250px;
     margin: 0 auto;
     background-color: white;
