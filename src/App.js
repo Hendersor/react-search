@@ -1,45 +1,64 @@
 import React from "react";
-import Item from "./Item";
 import "./App.scss";
-import "./Item";
+import Item from "./components/Item";
+import Search from "./components/Search"
 const { faker } = require("@faker-js/faker");
 
-const fakeUsers = [
-  {
-    name: faker.name.firstName(),
-    country: faker.address.country(),
-    image: faker.image.people(),
-    number: faker.random.number(),
-  },
-  {
-    name: faker.name.firstName(),
-    country: faker.address.country(),
-    image: faker.image.people(),
-    number: faker.random.number(),
-  },
-  {
-    name: faker.name.firstName(),
-    country: faker.address.country(),
-    image: faker.image.people(),
-    number: faker.random.number(),
-  },
-  {
-    name: faker.name.firstName(),
-    country: faker.address.country(),
-    image: faker.image.people(),
-    number: faker.random.number(),
-  },
-];
+
+
+const defaultFakeUsers = [
+    {
+      name: faker.name.firstName(),
+      country: faker.address.country(),
+      image: faker.image.people(),
+      number: faker.random.number(),
+    },
+    {
+      name: faker.name.firstName(),
+      country: faker.address.country(),
+      image: faker.image.people(),
+      number: faker.random.number(),
+    },
+    {
+      name: faker.name.firstName(),
+      country: faker.address.country(),
+      image: faker.image.people(),
+      number: faker.random.number(),
+    },
+    {
+      name: faker.name.firstName(),
+      country: faker.address.country(),
+      image: faker.image.people(),
+      number: faker.random.number(),
+    },
+  ];
+
+
+
 
 function App() {
+  const [todos, setTodos] = React.useState(defaultFakeUsers);
+  const [searchValue, setSearchValue] = React.useState("");
+
+  let searchedTodos = [];
+  if(!searchValue.length >=1){
+    searchedTodos = todos
+  }else{
+     searchedTodos = todos.filter(todo =>{
+     const todoText = todo.name.toLowerCase();
+     const searchText = searchValue.toLowerCase();
+     return todoText.includes(searchText)
+    })
+  }
+
   return (
     <div className="app">
       <section className="inputContainer">
-        <input className="input" /> <button> Search</button>
+        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
       </section>
 
       <section className="itemsContainer">
-        {fakeUsers.map((user) => (
+        {searchedTodos.map((user) => (
           <Item
             key={user.number}
             name={user.name}
@@ -48,6 +67,11 @@ function App() {
           />
         ))}
       </section>
+
+      <section className="buttonContainer">
+        <button onClick={() => setTodos(defaultFakeUsers)} className="blue">Refresh</button>
+        <button onClick={() => setTodos([])} className="red">Delete</button>
+      </section>    
     </div>
   );
 }
